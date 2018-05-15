@@ -4,7 +4,7 @@ init:
  - sh: echo $APPVEYOR_BUILD_WORKER_CLOUD
 
 environment:
- - MINIMAL_VERSION: 3.11
+  MINIMAL_VERSION: 3.11
 
 test_script:
  - sh: |
