@@ -8,7 +8,7 @@ environment:
 
 test_script:
  - sh: |
-    VERSION=$(cmake --version)
+    VERSION=$(cmake --version | head -n1 | cut -f3 -d' ')
     echo "Cmake version is $VERSION"
     SUFFIX=${VERSION#*-}
     IFS=. read -r Ma Mi fix <<< "${VERSION%%-*}"
