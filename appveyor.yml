@@ -1,0 +1,23 @@
+init:
+ - appveyor version
+ - sh: echo $APPVEYOR_BUILD_WORKER_IMAGE
+ - sh: echo $APPVEYOR_BUILD_WORKER_CLOUD
+
+environment:
+ - MINIMAL_VERSION: 3.11
+
+test_script:
+ - sh: |
+    VERSION=$(cmake --version)
+    echo "Cmake version is $VERSION"
+    SUFFIX=${VERSION#*-}
+    IFS=. read -r Ma Mi fix <<< "${VERSION%%-*}"
+    IFS=. read -r MIN_MA MIN_MI MIN_FIX <<< "${MINIMAL_VERSION%%-*}"
+    if [ $Ma -ge $MIN_MA ] && [ $Mi -ge $MIN_MI ]; then
+      echo "Cmake version is greater or equal to $MINIMAL_VERSION"
+    else
+      echo "Cmake version is lower than $MINIMAL_VERSION"
+      return 1
+    fi
+
+build: off
